@@ -1,2 +1,0 @@
-"""Incident reporting simulation package."""
-
