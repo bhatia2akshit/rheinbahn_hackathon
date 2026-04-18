@@ -18,11 +18,11 @@
 
 <div class="container mt-4">
 
-    <h3 class="fw-bold mb-4">Incident Details</h3>
+    <h3 class="fw-bold mb-4">Event Details</h3>
 
     <div class="card shadow-sm">
         <div class="card-header">
-            <h5 class="mb-0">Event #{{ event.event_no }}</h5>
+            <h5 class="mb-0">Event #{{ event.event_id }}</h5>
         </div>
 
         <div class="card-body">
@@ -31,23 +31,35 @@
                     <tbody>
                         <tr>
                             <th scope="row">Event ID</th>
-                            <td>{{ event.id }}</td>
+                            <td>{{ event.event_id }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Event Number</th>
-                            <td>{{ event.event_no }}</td>
+                            <th scope="row">Driver Name</th>
+                            <td>{{ event.driver_name }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Vehicle</th>
-                            <td>{{ event.vehicle_no }}</td>
+                            <th scope="row">Train/Bus Number</th>
+                            <td>{{ event.train_bus_number }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Status</th>
-                            <td>{{ event.status }}</td>
+                            <td>
+                                <span class="badge status-badge status-{{ event.status|lower|replace(' ', '-') }}">
+                                    {{ event.status }}
+                                </span>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">Timestamp</th>
                             <td>{{ event.timestamp }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Location</th>
+                            <td>
+                                <a href="{{ event.google_maps_url }}" target="_blank" rel="noopener noreferrer" class="location-link">
+                                    {{ event.location }}
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">Description</th>

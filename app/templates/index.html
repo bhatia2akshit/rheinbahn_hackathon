@@ -36,9 +36,11 @@
             <table class="table mb-0 events-table">
                 <thead>
                     <tr>
-                        <th scope="col">Event</th>
-                        <th scope="col">Vehicle</th>
+                        <th scope="col">Event ID</th>
+                        <th scope="col">Driver Name</th>
+                        <th scope="col">Train/Bus Number</th>
                         <th scope="col">Timestamp</th>
+                        <th scope="col">Location</th>
                         <th scope="col">Description</th>
                         <th scope="col">Status</th>
                     </tr>
@@ -46,12 +48,24 @@
                 <tbody>
                     {% for inc in events %}
                     <tr class="event-row" data-href="/event/{{ inc.id }}" tabindex="0" role="link">
-                        <td class="fw-semibold">#{{ inc.event_no }}</td>
-                        <td>{{ inc.vehicle_no }}</td>
+                        <td class="fw-semibold">{{ inc.event_id }}</td>
+                        <td>{{ inc.driver_name }}</td>
+                        <td>{{ inc.train_bus_number }}</td>
                         <td>{{ inc.timestamp }}</td>
+                        <td>
+                            <a
+                                href="{{ inc.google_maps_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="location-link"
+                                onclick="event.stopPropagation();"
+                            >
+                                {{ inc.location }}
+                            </a>
+                        </td>
                         <td>{{ inc.description }}</td>
                         <td>
-                            <span class="badge status-badge status-{{ inc.status|lower }}">
+                            <span class="badge status-badge status-{{ inc.status|lower|replace(' ', '-') }}">
                                 {{ inc.status }}
                             </span>
                         </td>
