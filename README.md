@@ -9,10 +9,6 @@ Small local simulation web app for an ÖPNV driver incident-reporting workflow.
 - Action routing (currently only `call_police`)
 - Police department lookup by postal code range
 - German police-call script generation
-- Voice pipeline via Pipecat + WebRTC
-- STT via Deepgram
-- TTS via Deepgram
-- Optional LLM script polishing via Hugging Face Router OpenAI-compatible API
 - Incident persistence in SQLite
 - Simple Jinja2 + vanilla JS frontend
 
@@ -22,9 +18,6 @@ Small local simulation web app for an ÖPNV driver incident-reporting workflow.
 - `SQLAlchemy ORM`
 - `SQLite`
 - `Jinja2` templates + vanilla JS/CSS
-- `Pipecat` (SmallWebRTC transport)
-- `deepgram-sdk`
-- Hugging Face Router (`https://router.huggingface.co/v1`) for LLM
 
 ## Project Structure
 
@@ -37,15 +30,8 @@ app/
   seed.py
   services/
     classifier.py
-    incident_workflow.py
     router.py
     script_generator.py
-  voice/
-    config.py
-    hf_llm.py
-    hf_services.py
-    processor.py
-    runtime.py
   templates/
     index.html
   static/
@@ -92,6 +78,7 @@ source .venv/bin/activate
 
 ```bash
 pip install -r requirements.txt
+pip install python-multipart
 ```
 
 3. Initialize and seed the database:
@@ -110,49 +97,6 @@ uvicorn app.main:app --reload
 
 - [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
-## Voice Mode Setup (Pipecat + WebRTC)
-
-Set required env vars before running:
-
-```bash
-export DEEPGRAM_API_KEY="your_deepgram_api_key"
-```
-
-You can also put the same values in a `.env` file at the project root.
-The app now auto-loads `.env` on startup.
-`DEEPGRAM_API_KEY` is required for voice mode.
-
-Optional:
-
-```bash
-export VOICE_DEFAULT_POSTAL_CODE="10115"
-export DEEPGRAM_STT_MODEL="nova-3-general"
-export DEEPGRAM_STT_LANGUAGE="de"
-
-export DEEPGRAM_TTS_MODEL="aura-2-helena-en"
-export DEEPGRAM_TTS_VOICE="aura-2-helena-en"
-export DEEPGRAM_TTS_ENCODING="linear16"
-export DEEPGRAM_TTS_SAMPLE_RATE="24000"
-
-# Optional HF token for LLM polishing only.
-export HF_TOKEN="your_huggingface_token"
-export HF_LLM_MODEL="meta-llama/Llama-3.1-8B-Instruct:hf-inference"
-export HF_LLM_TEMPERATURE="0.2"
-export HF_LLM_MAX_TOKENS="220"
-```
-
-Then open:
-
-- [http://127.0.0.1:8000/voice/client/](http://127.0.0.1:8000/voice/client/)
-
-Voice flow:
-
-1. Browser microphone stream via WebRTC to Pipecat transport.
-2. STT transcription by Deepgram.
-3. Incident workflow classification + police lookup in local app logic.
-4. Optional script polishing through Hugging Face Router chat completion.
-5. Final script spoken through Deepgram TTS.
-
 ## API Endpoints
 
 - `GET /` -> Frontend page
@@ -160,10 +104,6 @@ Voice flow:
 - `GET /api/categories` -> List seeded categories
 - `GET /api/police-departments` -> List seeded police departments
 - `GET /api/incidents` -> List saved incidents
-- `GET /api/voice/status` -> Voice configuration/runtime status
-- `POST /api/offer` -> WebRTC offer signaling (Pipecat SmallWebRTC)
-- `PATCH /api/offer` -> ICE candidate signaling
-- `POST /start` and `sessions/{session_id}/...` -> session-style signaling compatibility
 
 ## Notes on Behavior
 
@@ -197,3 +137,4 @@ You can later add additional actions such as:
 - `notify_control_center`
 - `send_sms`
 - `create_internal_ticket`
+

@@ -9,9 +9,6 @@ const outDepartment = document.getElementById("out-department");
 const outPhone = document.getElementById("out-phone");
 const outSummary = document.getElementById("out-summary");
 const outScript = document.getElementById("out-script");
-const conversationMeta = document.getElementById("conversation-meta");
-const conversationBox = document.getElementById("conversation-box");
-const conversationEvent = document.getElementById("conversation-event");
 
 const actionLabels = {
     call_police: "Polizei kontaktieren (Simulation)",
@@ -84,58 +81,4 @@ document.querySelectorAll(".sample-btn").forEach((button) => {
     });
 });
 
-function escapeHtml(value) {
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;");
-}
-
-function renderConversation(data) {
-    if (!conversationBox || !conversationMeta || !conversationEvent) {
-        return;
-    }
-
-    const status = data.status || "idle";
-    const sessionId = data.session_id || "-";
-    conversationMeta.textContent = `Status: ${status} | Session: ${sessionId}`;
-
-    const messages = Array.isArray(data.messages) ? data.messages : [];
-    if (!messages.length) {
-        conversationBox.innerHTML = `<p class="conversation-empty">Noch keine Konversation vorhanden.</p>`;
-    } else {
-        conversationBox.innerHTML = messages
-            .map((message) => {
-                const role = message.role === "ai" ? "KI" : "Fahrer";
-                const roleClass = message.role === "ai" ? "ai" : "driver";
-                return `<div class="conversation-line ${roleClass}"><strong>${role}:</strong> ${escapeHtml(message.text || "")}</div>`;
-            })
-            .join("");
-        conversationBox.scrollTop = conversationBox.scrollHeight;
-    }
-
-    if (data.event) {
-        conversationEvent.textContent = JSON.stringify(data.event, null, 2);
-    } else {
-        conversationEvent.textContent = "Noch kein Event erstellt.";
-    }
-}
-
-async function refreshVoiceConversation() {
-    if (!conversationBox || !conversationMeta || !conversationEvent) {
-        return;
-    }
-    try {
-        const response = await fetch("/api/voice/conversation");
-        if (!response.ok) {
-            return;
-        }
-        const data = await response.json();
-        renderConversation(data);
-    } catch (error) {
-        // Ignore transient polling errors for now.
-    }
-}
-
-setInterval(refreshVoiceConversation, 1500);
-refreshVoiceConversation();
+console.log("RheinBahn Dashboard Loaded");

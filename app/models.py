@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
+from urllib.parse import quote_plus
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -54,3 +55,20 @@ class Incident(Base):
 
     police_department: Mapped[PoliceDepartment | None] = relationship(back_populates="incidents")
 
+class Event(Base):
+    __tablename__ = "events"
+    id = Column(Integer, primary_key=True, index=True)
+    train_bus_number = Column("vehicle_number", String, nullable=False)
+    timestamp = Column("created_at", DateTime, default=lambda: datetime.now(timezone.utc))
+    driver_name = Column(String(120), nullable=False, default="Unknown Driver")
+    location = Column(String(255), nullable=False, default="Unknown Location")
+    description = Column(Text, nullable=True, default="No description available.")
+    status = Column(String(30), nullable=False, default="created")
+
+    @property
+    def event_id(self) -> int:
+        return self.id
+
+    @property
+    def google_maps_url(self) -> str:
+        return f"https://www.google.com/maps/search/?api=1&query={quote_plus(self.location or '')}"

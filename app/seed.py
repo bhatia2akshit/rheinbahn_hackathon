@@ -1,11 +1,11 @@
 import json
 from datetime import datetime, timezone
 
-from sqlalchemy import select
+from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
 from app.database import Base, SessionLocal, engine
-from app.models import Category, Incident, PoliceDepartment
+from app.models import Category, Event, Incident, PoliceDepartment
 from app.schemas import ActionType
 from app.services.classifier import detect_category_keys
 from app.services.router import find_police_department_by_postal_code, select_action
@@ -139,8 +139,136 @@ SAMPLE_TEST_INCIDENTS = [
 ]
 
 
+SAMPLE_EVENTS = [
+    {
+        "driver_name": "Lukas Schneider",
+        "train_bus_number": "Bus 42",
+        "timestamp": datetime(2025, 1, 10, 8, 15, 0),
+        "location": "Heinrich-Heine-Allee, Dusseldorf",
+        "description": "Passenger altercation reported near front door.",
+        "status": "created",
+    },
+    {
+        "driver_name": "Anna Weber",
+        "train_bus_number": "Train U7",
+        "timestamp": datetime(2025, 1, 10, 9, 30, 0),
+        "location": "Dusseldorf Central Station",
+        "description": "Medical assistance requested for one passenger.",
+        "status": "in progress",
+    },
+    {
+        "driver_name": "Mehmet Kaya",
+        "train_bus_number": "Bus 125",
+        "timestamp": datetime(2025, 1, 10, 10, 5, 0),
+        "location": "Bilk S-Bahn Station, Dusseldorf",
+        "description": "Illegal parking blocking bus lane.",
+        "status": "pending",
+    },
+    {
+        "driver_name": "Sophie Brandt",
+        "train_bus_number": "Tram 703",
+        "timestamp": datetime(2025, 1, 10, 11, 20, 0),
+        "location": "Konigsallee, Dusseldorf",
+        "description": "Suspicious package checked and cleared by authorities.",
+        "status": "resolved",
+    },
+    {
+        "driver_name": "David Fischer",
+        "train_bus_number": "Train S8",
+        "timestamp": datetime(2025, 1, 10, 12, 45, 0),
+        "location": "Dusseldorf Flughafen Terminal",
+        "description": "Signal issue causing temporary delay.",
+        "status": "in progress",
+    },
+]
+
+
 def init_db() -> None:
     Base.metadata.create_all(bind=engine)
+
+
+def ensure_event_schema() -> None:
+    with engine.begin() as conn:
+        event_columns = conn.execute(text("PRAGMA table_info(events)")).fetchall()
+        if not event_columns:
+            return
+
+        existing_names = {column[1] for column in event_columns}
+        if "driver_name" not in existing_names:
+            conn.execute(text("ALTER TABLE events ADD COLUMN driver_name VARCHAR(120)"))
+        if "location" not in existing_names:
+            conn.execute(text("ALTER TABLE events ADD COLUMN location VARCHAR(255)"))
+        if "description" not in existing_names:
+            conn.execute(text("ALTER TABLE events ADD COLUMN description TEXT"))
+        if "status" not in existing_names:
+            conn.execute(text("ALTER TABLE events ADD COLUMN status VARCHAR(30)"))
+
+        conn.execute(
+            text(
+                "UPDATE events "
+                "SET driver_name = 'Unknown Driver' "
+                "WHERE driver_name IS NULL OR TRIM(driver_name) = ''"
+            )
+        )
+        conn.execute(
+            text(
+                "UPDATE events "
+                "SET location = 'Unknown Location' "
+                "WHERE location IS NULL OR TRIM(location) = ''"
+            )
+        )
+        conn.execute(
+            text(
+                "UPDATE events "
+                "SET description = 'No description available.' "
+                "WHERE description IS NULL OR TRIM(description) = ''"
+            )
+        )
+        conn.execute(text("UPDATE events SET status = LOWER(status) WHERE status IS NOT NULL"))
+        conn.execute(text("UPDATE events SET status = REPLACE(status, '_', ' ') WHERE status IS NOT NULL"))
+        conn.execute(
+            text(
+                "UPDATE events "
+                "SET status = 'created' "
+                "WHERE status IS NULL "
+                "OR TRIM(status) = '' "
+                "OR status NOT IN ('created', 'in progress', 'resolved', 'pending')"
+            )
+        )
+        conn.execute(
+            text(
+                "UPDATE events "
+                "SET driver_name = CASE vehicle_number "
+                "WHEN 'Bus 42' THEN 'Lukas Schneider' "
+                "WHEN 'Train U7' THEN 'Anna Weber' "
+                "WHEN 'Bus 125' THEN 'Mehmet Kaya' "
+                "WHEN 'Tram 703' THEN 'Sophie Brandt' "
+                "WHEN 'Train S8' THEN 'David Fischer' "
+                "ELSE driver_name END, "
+                "location = CASE vehicle_number "
+                "WHEN 'Bus 42' THEN 'Heinrich-Heine-Allee, Dusseldorf' "
+                "WHEN 'Train U7' THEN 'Dusseldorf Central Station' "
+                "WHEN 'Bus 125' THEN 'Bilk S-Bahn Station, Dusseldorf' "
+                "WHEN 'Tram 703' THEN 'Konigsallee, Dusseldorf' "
+                "WHEN 'Train S8' THEN 'Dusseldorf Flughafen Terminal' "
+                "ELSE location END, "
+                "description = CASE vehicle_number "
+                "WHEN 'Bus 42' THEN 'Passenger altercation reported near front door.' "
+                "WHEN 'Train U7' THEN 'Medical assistance requested for one passenger.' "
+                "WHEN 'Bus 125' THEN 'Illegal parking blocking bus lane.' "
+                "WHEN 'Tram 703' THEN 'Suspicious package checked and cleared by authorities.' "
+                "WHEN 'Train S8' THEN 'Signal issue causing temporary delay.' "
+                "ELSE description END, "
+                "status = CASE vehicle_number "
+                "WHEN 'Bus 42' THEN 'created' "
+                "WHEN 'Train U7' THEN 'in progress' "
+                "WHEN 'Bus 125' THEN 'pending' "
+                "WHEN 'Tram 703' THEN 'resolved' "
+                "WHEN 'Train S8' THEN 'in progress' "
+                "ELSE status END "
+                "WHERE driver_name = 'Unknown Driver' OR location = 'Unknown Location'"
+            )
+        )
 
 
 def seed_categories(db: Session) -> None:
@@ -194,13 +322,32 @@ def seed_sample_incidents(db: Session) -> None:
         )
 
 
+def seed_sample_events(db: Session) -> None:
+    if db.scalar(select(Event.id).limit(1)) is not None:
+        return
+
+    for sample in SAMPLE_EVENTS:
+        db.add(
+            Event(
+                driver_name=sample["driver_name"],
+                train_bus_number=sample["train_bus_number"],
+                timestamp=sample["timestamp"],
+                location=sample["location"],
+                description=sample["description"],
+                status=sample["status"],
+            )
+        )
+
+
 def seed_all() -> None:
     init_db()
+    ensure_event_schema()
     with SessionLocal() as db:
         seed_categories(db)
         seed_police_departments(db)
         db.commit()
         seed_sample_incidents(db)
+        seed_sample_events(db)
         db.commit()
 
 

@@ -1,4 +1,4 @@
-:root {
+/* :root {
     --bg: #f7efe5;
     --bg-soft: #fffaf4;
     --card: rgba(255, 255, 255, 0.86);
@@ -68,21 +68,6 @@ h2 {
     margin-top: 0;
 }
 
-.voice-link {
-    display: inline-block;
-    margin-top: 0.45rem;
-    color: #ffffff;
-    background: linear-gradient(135deg, #0b4f6c, #2d7d99);
-    border-radius: 10px;
-    padding: 0.55rem 0.85rem;
-    text-decoration: none;
-    font-weight: 700;
-}
-
-.voice-link:hover {
-    box-shadow: 0 10px 18px rgba(11, 79, 108, 0.25);
-}
-
 label {
     display: block;
     font-weight: 600;
@@ -132,43 +117,6 @@ button:hover {
     color: var(--danger);
     margin-top: 0.6rem;
     font-weight: 600;
-}
-
-.conversation-meta {
-    color: var(--muted);
-    margin-top: 0.1rem;
-}
-
-.conversation-box {
-    border: 1px solid #d9c7b8;
-    border-radius: 10px;
-    background: #fffdfb;
-    padding: 0.65rem;
-    min-height: 180px;
-    max-height: 320px;
-    overflow-y: auto;
-}
-
-.conversation-empty {
-    margin: 0;
-    color: var(--muted);
-}
-
-.conversation-line {
-    margin: 0 0 0.5rem;
-    padding: 0.5rem 0.6rem;
-    border-radius: 8px;
-    line-height: 1.3;
-}
-
-.conversation-line.driver {
-    background: #f7efe2;
-    border: 1px solid #ebdac8;
-}
-
-.conversation-line.ai {
-    background: #e8f6f4;
-    border: 1px solid #c9e9e5;
 }
 
 .result-grid {
@@ -254,5 +202,174 @@ thead {
     .sample-list li {
         align-items: flex-start;
         flex-direction: column;
+    }
+} */
+
+/* NEW CODE */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #d40000;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 15px;
+}
+
+.nav-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* MAIN CONTAINER */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+/* INCIDENT CARD */
+.incident-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-left: 6px solid #d40000;
+}
+
+.incident-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.incident-id {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.incident-status {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: white;
+}
+
+/* STATUS COLORS */
+.status-active {
+    background: #d40000;
+}
+
+.status-delayed {
+    background: #ff9800;
+}
+
+.status-resolved {
+    background: #4caf50;
+}
+
+.incident-body p {
+    margin: 6px 0;
+}
+
+.no-events {
+    text-align: center;
+    color: #777;
+    margin-top: 40px;
+}
+
+.events-table-wrap {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+}
+
+.events-table thead th {
+    background: #f7f7f7;
+    font-weight: 700;
+    color: #222;
+    border-bottom: 2px solid #dddddd;
+    white-space: nowrap;
+}
+
+.events-table td,
+.events-table th {
+    padding: 14px 12px;
+    vertical-align: middle;
+}
+
+.event-row {
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.event-row:focus {
+    outline: 2px solid #d40000;
+    outline-offset: -2px;
+}
+
+.event-row:hover {
+    background: #fff5f5;
+}
+
+.status-badge {
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.location-link {
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
+.status-created {
+    background: #f8d7da;
+    color: #842029;
+}
+
+.status-in-progress {
+    background: #fff3cd;
+    color: #664d03;
+}
+
+.status-resolved {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.status-pending {
+    background: #cfe2ff;
+    color: #084298;
+}
+
+@media (max-width: 768px) {
+    .events-table-wrap {
+        overflow-x: auto;
     }
 }

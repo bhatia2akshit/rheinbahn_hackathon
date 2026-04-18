@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Reporting Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+<div class="backdrop-shape"></div>
+<main class="page">
+
+    <h1>Speech to Text (Whisper)</h1>
+    <button id="recordBtn">Start Recording</button>
+    <button id="stopBtn" disabled>Stop</button>
+    <p><strong>Transcription:</strong></p>
+    <pre id="output"></pre>
+    <script src="/static/record.js"></script>
+
+    <header class="page-header">
+        <h1>ÖPNV Incident Reporting Simulator</h1>
+        <p>Simulation: Fahrer meldet Vorfall, System klassifiziert und bereitet Polizeimeldung vor.</p>
+    </header>
+
+    <section class="card form-card">
+        <h2>Vorfall melden</h2>
+        <form id="incident-form">
+            <label for="raw_text">Vorfallsbeschreibung</label>
+            <textarea id="raw_text" name="raw_text" rows="6" required
+                      placeholder="z. B. Ein Auto blockiert die Spur und ein Fahrgast wurde bedroht."></textarea>
+
+            <label for="postal_code">Postleitzahl (5-stellig)</label>
+            <input id="postal_code" name="postal_code" type="text" pattern="\d{5}" maxlength="5" required
+                   placeholder="z. B. 10115">
+
+            <button type="submit">Vorfall analysieren</button>
+        </form>
+        <p id="form-error" class="error-message" hidden></p>
+    </section>
+
+    <section class="card result-card" id="result-panel" hidden>
+        <h2>Analyseergebnis</h2>
+        <div class="result-grid">
+            <div>
+                <h3>Original Input</h3>
+                <p id="out-original"></p>
+            </div>
+            <div>
+                <h3>Kategorien</h3>
+                <p id="out-categories"></p>
+            </div>
+            <div>
+                <h3>Aktion</h3>
+                <p id="out-action"></p>
+            </div>
+            <div>
+                <h3>Polizeidienststelle</h3>
+                <p id="out-department"></p>
+            </div>
+            <div>
+                <h3>Telefonnummer</h3>
+                <p id="out-phone"></p>
+            </div>
+            <div>
+                <h3>Zusammenfassung</h3>
+                <p id="out-summary"></p>
+            </div>
+        </div>
+        <h3>Generiertes Meldeskript</h3>
+        <pre id="out-script"></pre>
+    </section>
+
+    <section class="card samples-card">
+        <h2>5 Beispielvorfälle (Manueller Test)</h2>
+        <ul class="sample-list">
+            {% for sample in sample_incidents %}
+            <li>
+                <span>{{ sample.raw_text }} (PLZ {{ sample.postal_code }})</span>
+                <button type="button" class="sample-btn"
+                        data-text="{{ sample.raw_text }}"
+                        data-plz="{{ sample.postal_code }}">
+                    Übernehmen
+                </button>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="card departments-card">
+        <h2>Seeded Police Departments (Debug/Transparenz)</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Stadt</th>
+                    <th>PLZ von</th>
+                    <th>PLZ bis</th>
+                    <th>Telefon</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for dep in departments %}
+                <tr>
+                    <td>{{ dep.name }}</td>
+                    <td>{{ dep.city }}</td>
+                    <td>{{ dep.postal_code_start }}</td>
+                    <td>{{ dep.postal_code_end }}</td>
+                    <td>{{ dep.phone_number }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+<script src="{{ url_for('static', path='app.js') }}" defer></script>
+</body>
+</html>
+
