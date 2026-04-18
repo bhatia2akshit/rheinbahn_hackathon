@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -15,6 +15,7 @@ from app.services.classifier import detect_category_keys
 from app.services.router import find_police_department_by_postal_code, select_action
 from app.services.script_generator import build_summary, generate_police_script
 
+from .speech import save_temp_file, transcribe_audio
 
 BASE_DIR = Path(__file__).resolve().parent
 
@@ -136,3 +137,8 @@ def list_incidents(db: Session = Depends(get_db)) -> list[schemas.IncidentOut]:
         )
     return result
 
+@app.post("/speech-to-text")
+async def speech_to_text(file: UploadFile):
+    temp_path = save_temp_file(file)
+    text = transcribe_audio(temp_path)
+    return {"text": text}

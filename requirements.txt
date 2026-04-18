@@ -3,4 +3,5 @@ uvicorn[standard]==0.35.0
 SQLAlchemy==2.0.43
 Jinja2==3.1.6
 pydantic==2.11.7
-
+openai-whisper
+torch

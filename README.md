@@ -78,6 +78,7 @@ source .venv/bin/activate
 
 ```bash
 pip install -r requirements.txt
+pip install python-multipart
 ```
 
 3. Initialize and seed the database:
