@@ -1,0 +1,90 @@
+import os
+import re
+from dataclasses import dataclass
+
+
+DEFAULT_POSTAL_CODE = "10115"
+_PLZ_PATTERN = re.compile(r"^\d{5}$")
+_HF_TOKEN_PATTERN = re.compile(r"(hf_[A-Za-z0-9]{20,})")
+
+
+def _normalize_ascii_secret(
+    raw: str | None,
+    env_name: str,
+) -> tuple[str | None, str | None]:
+    if not raw:
+        return None, None
+    cleaned = raw.strip().strip('"').strip("'")
+    if any(ord(ch) > 127 for ch in cleaned):
+        return None, f"{env_name} contains non-ASCII characters. Please paste a clean token."
+    return cleaned or None, None
+
+
+def _normalize_hf_token(raw: str | None) -> tuple[str | None, str | None]:
+    if not raw:
+        return None, None
+
+    cleaned = raw.strip().strip('"').strip("'")
+    match = _HF_TOKEN_PATTERN.search(cleaned)
+    if match:
+        token = match.group(1)
+        if token != cleaned:
+            return token, "HF_TOKEN had extra trailing/leading characters and was normalized."
+        return token, None
+
+    if any(ord(ch) > 127 for ch in cleaned):
+        return None, "HF_TOKEN contains non-ASCII characters. Please paste a clean token."
+    return cleaned or None, None
+
+
+@dataclass(frozen=True)
+class VoiceSettings:
+    deepgram_api_key: str | None
+    hf_token: str | None
+    config_warning: str | None
+    default_postal_code: str
+    stt_model: str
+    stt_language: str
+    tts_model: str
+    tts_voice: str
+    tts_encoding: str
+    tts_sample_rate: int
+    llm_model: str
+    llm_temperature: float
+    llm_max_tokens: int
+
+    @property
+    def missing_required_env_vars(self) -> list[str]:
+        return [] if self.deepgram_api_key else ["DEEPGRAM_API_KEY"]
+
+    @property
+    def configured(self) -> bool:
+        return bool(self.deepgram_api_key)
+
+
+def load_voice_settings() -> VoiceSettings:
+    deepgram_api_key, deepgram_warning = _normalize_ascii_secret(
+        os.getenv("DEEPGRAM_API_KEY") or os.getenv("deepgram_api_key"),
+        "DEEPGRAM_API_KEY",
+    )
+    hf_token, token_warning = _normalize_hf_token(os.getenv("HF_TOKEN") or os.getenv("hf_token"))
+    default_postal_code = os.getenv("VOICE_DEFAULT_POSTAL_CODE", DEFAULT_POSTAL_CODE).strip()
+    if not _PLZ_PATTERN.fullmatch(default_postal_code):
+        default_postal_code = DEFAULT_POSTAL_CODE
+    warning = deepgram_warning or token_warning
+
+    return VoiceSettings(
+        deepgram_api_key=deepgram_api_key,
+        hf_token=hf_token,
+        config_warning=warning,
+        default_postal_code=default_postal_code,
+        stt_model=os.getenv("DEEPGRAM_STT_MODEL", "nova-3-general"),
+        stt_language=os.getenv("DEEPGRAM_STT_LANGUAGE", "de"),
+        tts_model=os.getenv("DEEPGRAM_TTS_MODEL", "aura-2-helena-en"),
+        tts_voice=os.getenv("DEEPGRAM_TTS_VOICE", os.getenv("DEEPGRAM_TTS_MODEL", "aura-2-helena-en")),
+        tts_encoding=os.getenv("DEEPGRAM_TTS_ENCODING", "linear16"),
+        tts_sample_rate=int(os.getenv("DEEPGRAM_TTS_SAMPLE_RATE", "24000")),
+        llm_model=os.getenv("HF_LLM_MODEL", "meta-llama/Llama-3.1-8B-Instruct:hf-inference"),
+        llm_temperature=float(os.getenv("HF_LLM_TEMPERATURE", "0.2")),
+        llm_max_tokens=int(os.getenv("HF_LLM_MAX_TOKENS", "220")),
+    )

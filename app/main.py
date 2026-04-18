@@ -1,8 +1,8 @@
-import json
 from pathlib import Path
 
+from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import select
@@ -11,12 +11,21 @@ from sqlalchemy.orm import Session
 from app import models, schemas
 from app.database import get_db
 from app.seed import SAMPLE_TEST_INCIDENTS, seed_all
-from app.services.classifier import detect_category_keys
-from app.services.router import find_police_department_by_postal_code, select_action
-from app.services.script_generator import build_summary, generate_police_script
+from app.services.incident_workflow import (
+    analyze_incident_workflow,
+    parse_detected_categories,
+    persist_incident,
+)
+from app.voice.config import load_voice_settings
+from app.voice.conversation_store import conversation_store
+from app.voice.runtime import VoiceRuntimeManager
 
 
 BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+
+# Load local .env automatically for local development.
+load_dotenv(PROJECT_ROOT / ".env")
 
 app = FastAPI(
     title="Public Transport Incident Reporting Simulator",
@@ -26,10 +35,27 @@ app = FastAPI(
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
+voice_manager = VoiceRuntimeManager(load_voice_settings())
+
+prebuilt_ui_available = False
+try:
+    from pipecat_ai_small_webrtc_prebuilt.frontend import SmallWebRTCPrebuiltUI
+
+    app.mount("/voice/client", SmallWebRTCPrebuiltUI)
+    prebuilt_ui_available = True
+except Exception:
+    prebuilt_ui_available = False
+
 
 @app.on_event("startup")
-def on_startup() -> None:
+async def on_startup() -> None:
     seed_all()
+    await voice_manager.prewarm()
+
+
+@app.on_event("shutdown")
+async def on_shutdown() -> None:
+    await voice_manager.shutdown()
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -43,6 +69,8 @@ def index(request: Request, db: Session = Depends(get_db)) -> HTMLResponse:
         context={
             "departments": departments,
             "sample_incidents": SAMPLE_TEST_INCIDENTS,
+            "voice_status": voice_manager.status(),
+            "prebuilt_ui_available": prebuilt_ui_available,
         },
     )
 
@@ -52,43 +80,22 @@ def analyze_incident(
     payload: schemas.IncidentAnalyzeRequest,
     db: Session = Depends(get_db),
 ) -> schemas.AnalyzeResponse:
-    category_keys = detect_category_keys(payload.raw_text)
-    categories = db.scalars(
-        select(models.Category).where(models.Category.internal_key.in_(category_keys))
-    ).all()
-    category_lookup = {category.internal_key: category.label_de for category in categories}
-    selected_labels = [category_lookup.get(key, "Unklare Störung") for key in category_keys]
-
-    action = select_action(category_keys)
-    department = find_police_department_by_postal_code(db, payload.postal_code)
-    summary = build_summary(payload.raw_text, selected_labels)
-    script = generate_police_script(
+    result = analyze_incident_workflow(
+        db=db,
         raw_text=payload.raw_text,
         postal_code=payload.postal_code,
-        categories=selected_labels,
-        department=department,
     )
-
-    incident = models.Incident(
-        raw_text=payload.raw_text,
-        postal_code=payload.postal_code,
-        detected_categories=json.dumps(selected_labels, ensure_ascii=False),
-        selected_action=action.value,
-        police_department_id=department.id if department else None,
-        generated_script=script,
-    )
-    db.add(incident)
-    db.commit()
+    persist_incident(db, result)
 
     return schemas.AnalyzeResponse(
         original_input=payload.raw_text,
         postal_code=payload.postal_code,
-        selected_categories=selected_labels,
-        selected_action=action.value,
-        police_department=department,
-        police_phone_number=department.phone_number if department else None,
-        summary=summary,
-        generated_script=script,
+        selected_categories=result.selected_categories,
+        selected_action=result.selected_action.value,
+        police_department=result.police_department,
+        police_phone_number=result.police_department.phone_number if result.police_department else None,
+        summary=result.summary,
+        generated_script=result.generated_script,
     )
 
 
@@ -109,12 +116,7 @@ def list_incidents(db: Session = Depends(get_db)) -> list[schemas.IncidentOut]:
     incidents = db.scalars(select(models.Incident).order_by(models.Incident.created_at.desc())).all()
     result: list[schemas.IncidentOut] = []
     for incident in incidents:
-        try:
-            categories = json.loads(incident.detected_categories)
-            if not isinstance(categories, list):
-                categories = ["Unklare Störung"]
-        except json.JSONDecodeError:
-            categories = ["Unklare Störung"]
+        categories = parse_detected_categories(incident.detected_categories)
 
         department = None
         if incident.police_department_id:
@@ -136,3 +138,75 @@ def list_incidents(db: Session = Depends(get_db)) -> list[schemas.IncidentOut]:
         )
     return result
 
+
+@app.get("/voice")
+def open_voice_client() -> Response:
+    if prebuilt_ui_available:
+        return RedirectResponse(url="/voice/client/")
+    return Response(
+        content=(
+            "Pipecat prebuilt WebRTC client is not installed. "
+            "Install dependency: pipecat-ai-small-webrtc-prebuilt"
+        ),
+        status_code=503,
+    )
+
+
+@app.get("/api/voice/status")
+def voice_status() -> dict:
+    return {
+        **voice_manager.status(),
+        "prebuilt_ui_available": prebuilt_ui_available,
+    }
+
+
+@app.get("/api/voice/conversation")
+def voice_conversation() -> dict:
+    return conversation_store.get_latest_snapshot()
+
+
+@app.post("/api/offer")
+async def create_offer(request: Request) -> dict:
+    payload = await request.json()
+    return await voice_manager.handle_offer_payload(payload)
+
+
+@app.patch("/api/offer")
+async def patch_offer(request: Request) -> dict:
+    payload = await request.json()
+    return await voice_manager.handle_patch_payload(payload)
+
+
+@app.post("/start")
+async def start_voice_session(request: Request) -> dict:
+    payload = await request.json()
+    session_body = payload.get("body", {})
+    enable_default_ice_servers = bool(payload.get("enableDefaultIceServers"))
+    return voice_manager.create_session(
+        body=session_body,
+        enable_default_ice_servers=enable_default_ice_servers,
+    )
+
+
+@app.api_route(
+    "/sessions/{session_id}/{path:path}",
+    methods=["GET", "POST", "PUT", "PATCH", "DELETE"],
+    response_model=None,
+)
+async def voice_session_proxy(session_id: str, path: str, request: Request):
+    session_body = voice_manager.get_session_body(session_id)
+    if session_body is None:
+        return Response(content="Invalid or not-yet-ready session_id", status_code=404)
+
+    if path.endswith("api/offer"):
+        payload = await request.json()
+        if request.method == "POST":
+            return await voice_manager.handle_offer_payload(
+                payload=payload,
+                fallback_request_data=session_body,
+            )
+        if request.method == "PATCH":
+            return await voice_manager.handle_patch_payload(payload)
+        return Response(content="Method not allowed", status_code=405)
+
+    return Response(status_code=200)

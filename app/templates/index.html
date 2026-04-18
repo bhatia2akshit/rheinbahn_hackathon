@@ -14,6 +14,32 @@
         <p>Simulation: Fahrer meldet Vorfall, System klassifiziert und bereitet Polizeimeldung vor.</p>
     </header>
 
+    <section class="card voice-card">
+        <h2>Voice Mode (Pipecat + WebRTC)</h2>
+        {% if voice_status.config_warning %}
+        <p class="error-message">Konfigurationshinweis: {{ voice_status.config_warning }}</p>
+        {% endif %}
+        {% if voice_status.configured and prebuilt_ui_available %}
+        <p>STT/TTS laufen über Deepgram. Optionales Skript-Polishing kann zusätzlich über Hugging Face laufen.</p>
+        <a class="voice-link" href="/voice/client/" target="_blank" rel="noopener noreferrer">Voice Client öffnen</a>
+        {% elif prebuilt_ui_available %}
+        <p>Voice Client ist verfügbar, aber API-Keys fehlen:
+            <strong>{{ ", ".join(voice_status.missing_env_vars) }}</strong></p>
+        {% else %}
+        <p>Voice Client Abhängigkeit fehlt (<code>pipecat-ai-small-webrtc-prebuilt</code>).</p>
+        {% endif %}
+    </section>
+
+    <section class="card conversation-card">
+        <h2>Live-Konversation Fahrer ↔ KI</h2>
+        <p class="conversation-meta" id="conversation-meta">Status: Keine aktive Voice-Sitzung.</p>
+        <div id="conversation-box" class="conversation-box">
+            <p class="conversation-empty">Noch keine Konversation vorhanden.</p>
+        </div>
+        <h3>Abgeleitetes Event</h3>
+        <pre id="conversation-event">Noch kein Event erstellt.</pre>
+    </section>
+
     <section class="card form-card">
         <h2>Vorfall melden</h2>
         <form id="incident-form">
@@ -109,4 +135,3 @@
 <script src="{{ url_for('static', path='app.js') }}" defer></script>
 </body>
 </html>
-
