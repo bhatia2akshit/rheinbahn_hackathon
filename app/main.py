@@ -1,8 +1,9 @@
 import json
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile
-from fastapi.responses import HTMLResponse
+from dotenv import load_dotenv
+from fastapi import Depends, FastAPI, HTTPException, Request, UploadFile, WebSocket
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import select
@@ -12,12 +13,25 @@ from app import models, schemas
 from app.database import get_db
 from app.seed import SAMPLE_TEST_INCIDENTS, seed_all
 from app.services.classifier import detect_category_keys
+from app.services.emergency_dispatch import (
+    DispatchServiceKey,
+    build_dispatch_calls_for_event,
+    call_accept_prompt,
+    call_page_title,
+)
 from app.services.router import find_police_department_by_postal_code, select_action
 from app.services.script_generator import build_summary, generate_police_script
+from app.voice.config import load_voice_settings
+from app.voice.conversation_store import conversation_store
+from app.voice.runtime import VoiceRuntimeManager
 
 from .speech import save_temp_file, transcribe_audio
 
 BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+
+# Load local .env automatically for local development.
+load_dotenv(PROJECT_ROOT / ".env")
 
 app = FastAPI(
     title="Public Transport Incident Reporting Simulator",
@@ -26,11 +40,18 @@ app = FastAPI(
 
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+voice_manager = VoiceRuntimeManager(load_voice_settings())
 
 
 @app.on_event("startup")
-def on_startup() -> None:
+async def on_startup() -> None:
     seed_all()
+    await voice_manager.prewarm()
+
+
+@app.on_event("shutdown")
+async def on_shutdown() -> None:
+    await voice_manager.shutdown()
 
 
 @app.post("/analyze", response_model=schemas.AnalyzeResponse)
@@ -122,6 +143,41 @@ def list_incidents(db: Session = Depends(get_db)) -> list[schemas.IncidentOut]:
         )
     return result
 
+
+@app.get("/voice")
+def voice_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        request=request,
+        name="voice.html",
+        context={},
+    )
+
+
+@app.get("/speaking", response_class=HTMLResponse)
+def speaking_page(request: Request) -> HTMLResponse:
+    return RedirectResponse(url="/voice")
+
+
+@app.get("/api/voice/status")
+def voice_status() -> dict:
+    return voice_manager.status()
+
+
+@app.get("/api/voice/conversation")
+def voice_conversation() -> dict:
+    return conversation_store.get_latest_snapshot()
+
+
+@app.websocket("/ws/voice-agent")
+async def voice_agent_socket(websocket: WebSocket) -> None:
+    await voice_manager.handle_browser_socket(websocket)
+
+
+@app.websocket("/ws/call-agent")
+async def call_agent_socket(websocket: WebSocket) -> None:
+    await voice_manager.handle_call_socket(websocket)
+
+
 @app.post("/speech-to-text")
 async def speech_to_text(file: UploadFile):
     temp_path = save_temp_file(file)
@@ -140,7 +196,8 @@ def index(request: Request, db: Session = Depends(get_db)) -> HTMLResponse:
         context={
             "departments": departments,
             "sample_incidents": SAMPLE_TEST_INCIDENTS,
-            "events": events
+            "events": events,
+            "voice_status": voice_manager.status(),
         },
     )
 
@@ -157,5 +214,67 @@ def incident_details(event_id: int, request: Request, db: Session = Depends(get_
         context={
             "request": request,
             "event": event,
+            "dispatch_calls": build_dispatch_calls_for_event(event),
         },
     )
+
+
+def _render_call_page(
+    *,
+    service: DispatchServiceKey,
+    event_id: int,
+    request: Request,
+    db: Session,
+) -> HTMLResponse:
+    event = db.get(models.Event, event_id)
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+
+    dispatch_calls = build_dispatch_calls_for_event(event)
+    selected_call = next((item for item in dispatch_calls if item["service"] == service), None)
+    if selected_call is None:
+        raise HTTPException(status_code=404, detail="No matching dispatch call for this event")
+
+    return templates.TemplateResponse(
+        request=request,
+        name="call.html",
+        context={
+            "request": request,
+            "event": event,
+            "call": selected_call,
+            "page_title": call_page_title(service),
+            "accept_prompt": call_accept_prompt(service),
+        },
+    )
+
+
+@app.get("/call/police/{event_id}", response_class=HTMLResponse)
+def police_call_page(event_id: int, request: Request, db: Session = Depends(get_db)) -> HTMLResponse:
+    return _render_call_page(service="police", event_id=event_id, request=request, db=db)
+
+
+@app.get("/police/{event_id}", response_class=HTMLResponse)
+def police_call_page_alias(
+    event_id: int,
+    request: Request,
+    db: Session = Depends(get_db),
+) -> HTMLResponse:
+    return _render_call_page(service="police", event_id=event_id, request=request, db=db)
+
+
+@app.get("/call/rettungs/{event_id}", response_class=HTMLResponse)
+def rettungs_call_page(
+    event_id: int,
+    request: Request,
+    db: Session = Depends(get_db),
+) -> HTMLResponse:
+    return _render_call_page(service="rettungs", event_id=event_id, request=request, db=db)
+
+
+@app.get("/rettungs/{event_id}", response_class=HTMLResponse)
+def rettungs_call_page_alias(
+    event_id: int,
+    request: Request,
+    db: Session = Depends(get_db),
+) -> HTMLResponse:
+    return _render_call_page(service="rettungs", event_id=event_id, request=request, db=db)

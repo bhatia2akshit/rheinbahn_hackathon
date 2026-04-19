@@ -232,7 +232,7 @@ def ensure_event_schema() -> None:
                 "SET status = 'created' "
                 "WHERE status IS NULL "
                 "OR TRIM(status) = '' "
-                "OR status NOT IN ('created', 'in progress', 'resolved', 'pending')"
+                "OR status NOT IN ('created', 'in progress', 'resolved', 'pending', 'open')"
             )
         )
         conn.execute(
@@ -354,4 +354,3 @@ def seed_all() -> None:
 if __name__ == "__main__":
     seed_all()
     print("Database initialized and seeded.")
-

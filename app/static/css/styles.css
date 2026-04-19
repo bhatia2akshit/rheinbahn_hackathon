@@ -368,6 +368,11 @@ body {
     color: #084298;
 }
 
+.status-open {
+    background: #f8d7da;
+    color: #842029;
+}
+
 @media (max-width: 768px) {
     .events-table-wrap {
         overflow-x: auto;

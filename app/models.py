@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from urllib.parse import quote_plus
 
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Text, event, text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -58,6 +58,7 @@ class Incident(Base):
 class Event(Base):
     __tablename__ = "events"
     id = Column(Integer, primary_key=True, index=True)
+    event_number = Column(String, nullable=False)
     train_bus_number = Column("vehicle_number", String, nullable=False)
     timestamp = Column("created_at", DateTime, default=lambda: datetime.now(timezone.utc))
     driver_name = Column(String(120), nullable=False, default="Unknown Driver")
@@ -72,3 +73,27 @@ class Event(Base):
     @property
     def google_maps_url(self) -> str:
         return f"https://www.google.com/maps/search/?api=1&query={quote_plus(self.location or '')}"
+
+
+@event.listens_for(Event, "before_insert")
+def assign_event_number(mapper, connection, target) -> None:
+    if getattr(target, "event_number", None):
+        return
+
+    latest = connection.execute(
+        text(
+            "SELECT event_number FROM events "
+            "WHERE event_number LIKE 'E%' "
+            "ORDER BY CAST(SUBSTR(event_number, 2) AS INTEGER) DESC "
+            "LIMIT 1"
+        )
+    ).scalar()
+
+    next_number = 1001
+    if isinstance(latest, str) and latest.startswith("E"):
+        try:
+            next_number = int(latest[1:]) + 1
+        except ValueError:
+            next_number = 1001
+
+    target.event_number = f"E{next_number}"

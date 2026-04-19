@@ -20,6 +20,28 @@
 
     <h3 class="fw-bold mb-4">Event Details</h3>
 
+    {% if dispatch_calls %}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Dispatch Calls</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                {% for call in dispatch_calls %}
+                <div class="col-md-6">
+                    <div class="border rounded p-3 h-100">
+                        <div class="small text-uppercase text-muted">{{ call.service_label }}</div>
+                        <div class="fw-semibold">{{ call.route_label }}</div>
+                        <div class="mb-2">{{ call.display_phone_number }}</div>
+                        <a href="{{ call.call_page_path }}" class="btn btn-danger btn-sm">Open {{ call.service_label }} Call</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <div class="card shadow-sm">
         <div class="card-header">
             <h5 class="mb-0">Event #{{ event.event_id }}</h5>
@@ -63,7 +85,7 @@
                         </tr>
                         <tr>
                             <th scope="row">Description</th>
-                            <td>{{ event.description }}</td>
+                            <td style="white-space: pre-wrap;">{{ event.description }}</td>
                         </tr>
                     </tbody>
                 </table>
