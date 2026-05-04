@@ -1,0 +1,9 @@
+{
+  "name": "rheinbahn-live-map-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Prototype mit automatischem Ops-Dispatch fuer Lernprognosen",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

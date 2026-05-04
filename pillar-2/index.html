@@ -1,0 +1,174 @@
+﻿<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Live Verkehrslage Karte</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css"
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-nav">
+      <div class="brand">Live-Netzkarte</div>
+      <nav>
+        <button id="nav-login-btn" class="nav-btn" type="button">Login</button>
+        <button id="nav-logout-btn" class="nav-btn" type="button">Logout</button>
+      </nav>
+    </header>
+
+    <section id="home-page" class="home-page">
+      <div class="hero-card">
+        <p class="kicker">Prototyp</p>
+        <h1>Willkommen zur Live Verkehrslage</h1>
+        <p>Login als `user` oder `admin`, um Karte, Störungen und Betriebsdetails zu sehen.</p>
+        <button id="open-login-btn" type="button">Jetzt einloggen</button>
+      </div>
+    </section>
+
+    <section id="dashboard" class="dashboard hidden">
+      <main class="map-area">
+        <div class="map-card">
+          <div id="map"></div>
+        </div>
+      </main>
+
+      <aside class="sidebar">
+        <header class="sidebar-header">
+          <p class="kicker">Live Ansicht</p>
+          <h2 id="welcome-title">Verkehrsübersicht</h2>
+          <p id="auth-state" class="hint">Nicht eingeloggt</p>
+        </header>
+
+        <section class="panel" id="route-panel">
+          <h3>Route finden</h3>
+          <label>
+            Startpunkt
+            <input list="stop-options" id="route-start" placeholder="z.B. Düsseldorf Hbf" />
+          </label>
+          <label>
+            Zielpunkt
+            <input list="stop-options" id="route-end" placeholder="z.B. Bilk S" />
+          </label>
+          <datalist id="stop-options"></datalist>
+          <button type="button" id="route-btn">Route anzeigen</button>
+          <button type="button" id="clear-route-btn" class="secondary-action">Route löschen</button>
+          <p id="route-message" class="hint"></p>
+          <p id="route-summary" class="hint"></p>
+          <ul id="route-impact-list" class="plain-list"></ul>
+        </section>
+
+        <section class="panel" id="selected-stop-panel">
+          <h3>Haltestellen-Details</h3>
+          <p class="hint">Klicke auf eine Haltestelle in der Karte.</p>
+          <div id="stop-detail-content"></div>
+        </section>
+
+        <section class="panel" id="incident-panel">
+          <h3>Aktive Störungen</h3>
+          <ul id="incident-list" class="plain-list"></ul>
+        </section>
+
+        <section class="panel" id="ai-learning-panel">
+          <h3>KI-Lernprognose</h3>
+          <p class="hint">Passagiermeldungen werden als Muster gelernt und in Risiko-Prognosen überführt.</p>
+          <ul id="ai-insight-list" class="plain-list"></ul>
+          <h3>Meldungsbericht</h3>
+          <p class="hint">Eingegangene Meldungen aus dem Feld „Meldung senden“.</p>
+          <ul id="report-log-list" class="plain-list"></ul>
+        </section>
+
+        <section class="panel" id="employee-panel">
+          <h3>Mitarbeiteransicht</h3>
+          <h3>Live Einsatz- und Pausenplanung</h3>
+          <div id="employee-live-summary" class="plain-list"></div>
+          <h3>Optimierte Pausenfenster</h3>
+          <ul id="employee-break-list" class="plain-list"></ul>
+          <h3>Automatische Anpassungen</h3>
+          <ul id="employee-adjustment-list" class="plain-list"></ul>
+        </section>
+
+        <section class="panel" id="report-send-panel">
+          <h3>Meldung senden</h3>
+          <form id="report-form">
+            <label>
+              Typ
+              <select name="type" required>
+                <option value="delay">Verspätung</option>
+                <option value="accident">Unfall</option>
+                <option value="obstacle">Hindernis / Baum</option>
+                <option value="crowding">Viele Passagiere</option>
+              </select>
+            </label>
+
+            <label>
+              Haltestelle
+              <select name="stopId" id="report-stop-select" required></select>
+            </label>
+
+            <label>
+              Geschätzte Zusatzzeit (Minuten)
+              <input type="number" name="delayImpact" min="0" max="60" value="5" required />
+            </label>
+
+            <div class="form-row">
+              <label>
+                Datum
+                <input type="date" name="reportDate" id="report-date-input" required />
+              </label>
+              <label>
+                Uhrzeit
+                <input type="time" name="reportTime" id="report-time-input" required />
+              </label>
+            </div>
+
+            <button type="button" id="report-now-btn" class="secondary-action">Jetzt setzen</button>
+
+            <label>
+              Hinweis
+              <textarea name="note" rows="3" placeholder="Kurze Beschreibung"></textarea>
+            </label>
+
+            <button type="submit">Meldung hinzufügen</button>
+          </form>
+        </section>
+      </aside>
+    </section>
+
+    <div id="login-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <div class="modal-card">
+        <h3 id="login-title">Login</h3>
+        <form id="login-form">
+          <label>
+            Benutzername
+            <input type="text" name="username" autocomplete="username" required />
+          </label>
+          <label>
+            Passwort
+            <input type="password" name="password" autocomplete="current-password" required />
+          </label>
+          <button type="submit">Anmelden</button>
+        </form>
+        <p id="auth-message" class="hint">Demo-Zugang: `user / user123` oder `admin / admin123`</p>
+        <button type="button" id="close-login-btn" class="secondary-action">Schließen</button>
+      </div>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
