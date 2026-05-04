@@ -1,0 +1,261 @@
+date,quarter,route_id,department,driver_id,planned_hours,actual_hours,overtime_hours,delay_minutes,incident_reason,break_taken,sick_leave,detour_flag,traffic_level,police_action,accident_flag,construction_flag,overtime_cost
+2025-07-07,Q3 2025,CE31,Operations Bus,D109,8,8.4,0.4,23,Traffic Jam,yes,1,0,medium,0,0,0,18.62
+2025-05-01,Q2 2025,CE31,Operations Bus,D170,8,8.5,0.5,30,Traffic Jam,yes,0,0,high,0,0,0,19.73
+2025-07-04,Q3 2025,U35,Operations Tram,D184,8,8.4,0.4,20,Accident,yes,0,0,medium,0,1,0,17.18
+2025-06-14,Q2 2025,SB37,Operations Bus,D162,8,8.8,0.8,28,Police Action,yes,0,0,high,1,0,0,30.44
+2025-06-05,Q2 2025,U35,Operations Tram,D158,8,8.1,0.1,5,Traffic Jam,yes,0,0,high,0,0,0,3.81
+2025-07-23,Q3 2025,CE31,Operations Bus,D117,8,8.6,0.6,31,Traffic Jam,yes,0,0,medium,0,0,0,25.48
+2025-05-15,Q2 2025,302,Operations Tram,D155,8,8.4,0.4,25,Police Action,yes,0,0,high,1,0,0,19.77
+2025-05-30,Q2 2025,306,Operations Tram,D171,8,8.7,0.7,27,Accident,yes,0,0,medium,0,1,0,32.62
+2025-07-09,Q3 2025,302,Operations Tram,D194,8,8.7,0.7,26,Traffic Jam,yes,0,0,high,0,0,0,35.68
+2025-07-16,Q3 2025,CE31,Operations Bus,D122,8,8.1,0.1,6,Traffic Jam,yes,0,0,high,0,0,0,4.59
+2025-07-25,Q3 2025,308,Operations Tram,D137,8,8.8,0.8,64,Traffic Jam,yes,0,0,medium,0,0,0,40.78
+2025-06-29,Q2 2025,SB37,Operations Bus,D188,8,8.2,0.2,8,Accident,yes,0,0,medium,0,1,0,9.71
+2025-06-15,Q2 2025,310,Operations Tram,D115,8,8.1,0.1,7,Accident,yes,0,0,high,0,1,0,5.05
+2025-07-23,Q3 2025,SB37,Operations Bus,D128,8,8.5,0.5,23,Accident,yes,0,0,medium,0,1,0,18.9
+2025-06-21,Q2 2025,310,Operations Tram,D145,8,9.5,1.5,49,Police Action,yes,0,0,medium,1,0,0,70.27
+2025-05-06,Q2 2025,U35,Operations Tram,D170,8,8.7,0.7,25,Accident,yes,0,0,medium,0,1,0,25.35
+2025-06-22,Q2 2025,318,Operations Tram,D178,8,8.7,0.7,27,Vehicle Issue,yes,0,0,medium,0,0,0,25.94
+2025-06-02,Q2 2025,308,Operations Tram,D162,8,8.9,0.9,19,Late Shift Handover,yes,0,0,low,0,0,0,41.45
+2025-05-27,Q2 2025,310,Operations Tram,D135,8,8.9,0.9,17,Late Shift Handover,yes,0,0,high,0,0,0,33.46
+2025-05-19,Q2 2025,310,Operations Tram,D106,8,8.1,0.1,10,Police Action,yes,1,0,medium,1,0,0,4.41
+2025-06-16,Q2 2025,U35,Operations Tram,D194,8,9.6,1.6,42,Late Shift Handover,no,0,0,medium,0,0,0,72.57
+2025-05-03,Q2 2025,SB37,Operations Bus,D133,8,8.6,0.6,21,Signal Problem,yes,0,0,medium,0,0,0,27.08
+2025-05-22,Q2 2025,U35,Operations Tram,D122,8,8.1,0.1,3,Traffic Jam,yes,0,0,medium,0,0,0,4.82
+2025-07-21,Q3 2025,318,Operations Tram,D192,8,8.9,0.9,7,Break Not Taken,no,0,0,high,0,0,0,37.21
+2025-05-25,Q2 2025,U35,Operations Tram,D155,8,8.4,0.4,27,Vehicle Issue,yes,0,0,high,0,0,0,14.39
+2025-07-06,Q3 2025,308,Operations Tram,D175,8,8.4,0.4,14,Police Action,yes,0,0,high,1,0,0,15.65
+2025-07-07,Q3 2025,306,Operations Tram,D113,8,8.3,0.3,11,Construction Detour,yes,0,1,medium,0,0,1,12.18
+2025-06-07,Q2 2025,308,Operations Tram,D138,8,8.3,0.3,18,Accident,yes,0,0,low,0,1,0,15.24
+2025-06-04,Q2 2025,U35,Operations Tram,D159,8,8.3,0.3,16,Construction Detour,yes,0,1,low,0,0,1,11.26
+2025-05-05,Q2 2025,306,Operations Tram,D132,8,8.5,0.5,24,Signal Problem,yes,0,0,high,0,0,0,20.83
+2025-07-04,Q3 2025,SB37,Operations Bus,D129,8,9.0,1.0,11,Vehicle Issue,no,0,0,high,0,0,0,45.36
+2025-07-26,Q3 2025,318,Operations Tram,D129,8,8.5,0.5,37,Vehicle Issue,yes,0,0,medium,0,0,0,20.39
+2025-05-09,Q2 2025,302,Operations Tram,D147,8,8.9,0.9,10,Break Not Taken,no,0,0,medium,0,0,0,39.62
+2025-06-01,Q2 2025,310,Operations Tram,D108,8,9.3,1.3,53,Traffic Jam,yes,0,0,high,0,0,0,45.69
+2025-06-22,Q2 2025,302,Operations Tram,D169,8,9.5,1.5,30,Break Not Taken,no,0,0,high,0,0,0,75.8
+2025-07-17,Q3 2025,SB37,Operations Bus,D169,8,9.0,1.0,22,Break Not Taken,no,0,0,medium,0,0,0,45.38
+2025-05-15,Q2 2025,SB37,Operations Bus,D156,8,8.3,0.3,22,Construction Detour,yes,0,1,medium,0,0,1,15.42
+2025-07-04,Q3 2025,CE31,Operations Bus,D144,8,8.6,0.6,33,Traffic Jam,yes,0,0,high,0,0,0,21.74
+2025-05-28,Q2 2025,SB37,Operations Bus,D187,8,8.6,0.6,21,Police Action,yes,0,0,medium,1,0,0,31.1
+2025-06-22,Q2 2025,308,Operations Tram,D170,8,8.3,0.3,16,Police Action,yes,0,0,low,1,0,0,13.18
+2025-07-19,Q3 2025,306,Operations Tram,D156,8,9.5,1.5,57,Break Not Taken,no,0,0,low,0,0,0,62.73
+2025-05-07,Q2 2025,308,Operations Tram,D142,8,8.7,0.7,49,Traffic Jam,yes,0,0,high,0,0,0,36.38
+2025-05-22,Q2 2025,302,Operations Tram,D183,8,8.8,0.8,28,Construction Detour,yes,0,1,high,0,0,1,28.66
+2025-07-17,Q3 2025,302,Operations Tram,D172,8,8.1,0.1,3,Traffic Jam,yes,0,0,medium,0,0,0,4.05
+2025-06-17,Q2 2025,U35,Operations Tram,D144,8,8.1,0.1,6,Traffic Jam,yes,0,0,high,0,0,0,3.67
+2025-07-07,Q3 2025,CE31,Operations Bus,D105,8,8.3,0.3,10,Signal Problem,yes,0,0,medium,0,0,0,11.86
+2025-07-25,Q3 2025,CE31,Operations Bus,D128,8,10.2,2.2,55,Police Action,no,0,0,high,1,0,0,89.17
+2025-07-07,Q3 2025,U35,Operations Tram,D153,8,8.4,0.4,15,Traffic Jam,yes,0,0,high,0,0,0,18.96
+2025-06-20,Q2 2025,318,Operations Tram,D159,8,9.3,1.3,21,Construction Detour,no,0,1,high,0,0,1,58.1
+2025-06-10,Q2 2025,CE31,Operations Bus,D165,8,8.5,0.5,33,Construction Detour,yes,0,1,medium,0,0,1,25.73
+2025-05-12,Q2 2025,302,Operations Tram,D176,8,8.1,0.1,7,Police Action,yes,0,0,high,1,0,0,3.53
+2025-05-06,Q2 2025,306,Operations Tram,D106,8,9.1,1.1,20,Vehicle Issue,no,0,0,high,0,0,0,50.45
+2025-05-05,Q2 2025,310,Operations Tram,D111,8,8.0,0.0,3,Vehicle Issue,yes,1,0,low,0,0,0,0.0
+2025-05-20,Q2 2025,308,Operations Tram,D161,8,8.9,0.9,54,Traffic Jam,yes,0,0,medium,0,0,0,39.71
+2025-06-14,Q2 2025,310,Operations Tram,D138,8,9.3,1.3,43,Construction Detour,yes,0,1,high,0,0,1,47.13
+2025-05-03,Q2 2025,308,Operations Tram,D148,8,8.6,0.6,13,Late Shift Handover,yes,0,0,low,0,0,0,25.4
+2025-06-07,Q2 2025,CE31,Operations Bus,D193,8,8.8,0.8,7,Accident,no,0,0,high,0,1,0,29.54
+2025-06-18,Q2 2025,306,Operations Tram,D123,8,8.7,0.7,53,Traffic Jam,yes,0,0,high,0,0,0,34.99
+2025-06-01,Q2 2025,306,Operations Tram,D108,8,8.6,0.6,13,Late Shift Handover,yes,0,0,medium,0,0,0,29.74
+2025-05-21,Q2 2025,308,Operations Tram,D129,8,8.9,0.9,16,Break Not Taken,no,0,0,medium,0,0,0,37.92
+2025-07-26,Q3 2025,310,Operations Tram,D172,8,8.9,0.9,12,Traffic Jam,no,0,0,medium,0,0,0,36.94
+2025-07-13,Q3 2025,318,Operations Tram,D136,8,8.2,0.2,16,Signal Problem,yes,0,0,low,0,0,0,9.32
+2025-06-08,Q2 2025,306,Operations Tram,D144,8,9.3,1.3,27,Break Not Taken,no,1,0,high,0,0,0,46.2
+2025-06-19,Q2 2025,308,Operations Tram,D194,8,9.7,1.7,40,Break Not Taken,no,1,0,low,0,0,0,67.02
+2025-07-29,Q3 2025,310,Operations Tram,D111,8,8.2,0.2,13,Construction Detour,yes,0,1,medium,0,0,1,8.16
+2025-06-19,Q2 2025,U35,Operations Tram,D163,8,9.1,1.1,19,Accident,no,0,0,low,0,1,0,45.07
+2025-07-07,Q3 2025,310,Operations Tram,D170,8,8.1,0.1,6,Traffic Jam,yes,0,0,medium,0,0,0,3.6
+2025-06-10,Q2 2025,318,Operations Tram,D156,8,8.5,0.5,22,Construction Detour,yes,0,1,medium,0,0,1,21.41
+2025-07-08,Q3 2025,318,Operations Tram,D164,8,9.0,1.0,21,Break Not Taken,no,0,0,high,0,0,0,49.44
+2025-05-26,Q2 2025,U35,Operations Tram,D142,8,9.6,1.6,37,Break Not Taken,no,1,0,high,0,0,0,71.63
+2025-07-19,Q3 2025,CE31,Operations Bus,D169,8,8.3,0.3,15,Vehicle Issue,yes,1,0,low,0,0,0,13.31
+2025-05-22,Q2 2025,CE31,Operations Bus,D185,8,9.0,1.0,11,Construction Detour,no,0,1,high,0,0,1,50.72
+2025-06-08,Q2 2025,U35,Operations Tram,D139,8,8.5,0.5,19,Traffic Jam,yes,0,0,high,0,0,0,18.19
+2025-06-12,Q2 2025,SB37,Operations Bus,D109,8,8.9,0.9,15,Break Not Taken,no,0,0,medium,0,0,0,43.25
+2025-07-12,Q3 2025,CE31,Operations Bus,D144,8,8.9,0.9,11,Break Not Taken,no,0,0,high,0,0,0,43.68
+2025-06-03,Q2 2025,SB37,Operations Bus,D104,8,8.3,0.3,19,Police Action,yes,0,0,high,1,0,0,14.65
+2025-07-25,Q3 2025,318,Operations Tram,D119,8,9.3,1.3,36,Accident,no,0,0,medium,0,1,0,63.6
+2025-05-31,Q2 2025,310,Operations Tram,D130,8,9.0,1.0,57,Construction Detour,yes,0,1,medium,0,0,1,44.91
+2025-07-29,Q3 2025,318,Operations Tram,D123,8,9.6,1.6,33,Vehicle Issue,no,0,0,medium,0,0,0,61.11
+2025-07-29,Q3 2025,308,Operations Tram,D181,8,9.8,1.8,49,Break Not Taken,no,0,0,medium,0,0,0,84.42
+2025-05-09,Q2 2025,318,Operations Tram,D149,8,8.8,0.8,36,Construction Detour,yes,1,1,medium,0,0,1,36.54
+2025-05-12,Q2 2025,302,Operations Tram,D111,8,8.7,0.7,46,Vehicle Issue,yes,0,0,low,0,0,0,32.86
+2025-06-18,Q2 2025,308,Operations Tram,D181,8,8.4,0.4,28,Construction Detour,yes,0,1,low,0,0,1,16.73
+2025-06-29,Q2 2025,SB37,Operations Bus,D180,8,8.9,0.9,46,Signal Problem,yes,0,0,medium,0,0,0,40.34
+2025-06-08,Q2 2025,302,Operations Tram,D193,8,9.3,1.3,21,Accident,no,0,0,high,0,1,0,64.44
+2025-06-30,Q2 2025,CE31,Operations Bus,D162,8,8.5,0.5,43,Traffic Jam,yes,0,0,medium,0,0,0,17.94
+2025-07-07,Q3 2025,U35,Operations Tram,D107,8,8.9,0.9,40,Construction Detour,yes,0,1,medium,0,0,1,35.32
+2025-06-18,Q2 2025,SB37,Operations Bus,D130,8,9.8,1.8,65,Late Shift Handover,yes,0,0,medium,0,0,0,92.82
+2025-05-28,Q2 2025,310,Operations Tram,D172,8,8.3,0.3,13,Vehicle Issue,yes,0,0,high,0,0,0,12.29
+2025-06-14,Q2 2025,306,Operations Tram,D167,8,8.3,0.3,16,Police Action,yes,0,0,medium,1,0,0,11.25
+2025-06-22,Q2 2025,302,Operations Tram,D103,8,8.9,0.9,14,Break Not Taken,no,0,0,low,0,0,0,43.34
+2025-06-01,Q2 2025,318,Operations Tram,D131,8,9.9,1.9,45,Police Action,no,0,0,low,1,0,0,98.29
+2025-06-02,Q2 2025,318,Operations Tram,D103,8,8.2,0.2,6,Accident,yes,0,0,high,0,1,0,7.72
+2025-07-24,Q3 2025,318,Operations Tram,D169,8,8.1,0.1,7,Traffic Jam,yes,0,0,medium,0,0,0,5.06
+2025-07-14,Q3 2025,310,Operations Tram,D124,8,9.1,1.1,20,Break Not Taken,no,0,0,medium,0,0,0,42.02
+2025-05-09,Q2 2025,U35,Operations Tram,D106,8,8.9,0.9,8,Construction Detour,no,0,1,medium,0,0,1,34.19
+2025-05-21,Q2 2025,SB37,Operations Bus,D194,8,8.8,0.8,49,Police Action,yes,0,0,medium,1,0,0,29.94
+2025-05-12,Q2 2025,318,Operations Tram,D153,8,9.1,1.1,26,Late Shift Handover,yes,0,0,medium,0,0,0,53.51
+2025-07-20,Q3 2025,SB37,Operations Bus,D162,8,9.6,1.6,38,Break Not Taken,no,0,0,low,0,0,0,57.4
+2025-06-01,Q2 2025,SB37,Operations Bus,D150,8,8.2,0.2,14,Vehicle Issue,yes,0,0,medium,0,0,0,8.86
+2025-06-22,Q2 2025,318,Operations Tram,D125,8,8.6,0.6,40,Accident,yes,1,0,medium,0,1,0,28.32
+2025-07-22,Q3 2025,308,Operations Tram,D175,8,8.2,0.2,15,Accident,yes,0,0,low,0,1,0,9.35
+2025-05-14,Q2 2025,310,Operations Tram,D162,8,9.1,1.1,19,Traffic Jam,no,0,0,high,0,0,0,55.1
+2025-05-20,Q2 2025,SB37,Operations Bus,D160,8,8.3,0.3,25,Police Action,yes,0,0,medium,1,0,0,13.58
+2025-06-22,Q2 2025,U35,Operations Tram,D178,8,8.1,0.1,6,Traffic Jam,yes,0,0,high,0,0,0,4.3
+2025-06-18,Q2 2025,318,Operations Tram,D111,8,8.3,0.3,15,Construction Detour,yes,0,1,medium,0,0,1,13.29
+2025-05-12,Q2 2025,308,Operations Tram,D149,8,8.9,0.9,17,Late Shift Handover,yes,0,0,medium,0,0,0,45.85
+2025-06-14,Q2 2025,U35,Operations Tram,D159,8,8.5,0.5,35,Construction Detour,yes,1,1,medium,0,0,1,19.38
+2025-06-22,Q2 2025,302,Operations Tram,D149,8,10.0,2.0,50,Traffic Jam,no,0,0,high,0,0,0,97.99
+2025-05-15,Q2 2025,318,Operations Tram,D142,8,8.5,0.5,36,Accident,yes,0,0,medium,0,1,0,25.08
+2025-07-14,Q3 2025,U35,Operations Tram,D101,8,8.6,0.6,22,Traffic Jam,yes,0,0,medium,0,0,0,24.42
+2025-06-14,Q2 2025,U35,Operations Tram,D156,8,9.5,1.5,34,Signal Problem,no,0,0,medium,0,0,0,67.73
+2025-05-20,Q2 2025,318,Operations Tram,D140,8,8.4,0.4,18,Construction Detour,yes,0,1,medium,0,0,1,19.36
+2025-05-09,Q2 2025,SB37,Operations Bus,D148,8,9.1,1.1,16,Break Not Taken,no,0,0,low,0,0,0,56.65
+2025-05-21,Q2 2025,306,Operations Tram,D151,8,8.8,0.8,62,Traffic Jam,yes,0,0,low,0,0,0,28.71
+2025-06-11,Q2 2025,306,Operations Tram,D182,8,9.1,1.1,37,Vehicle Issue,yes,0,0,high,0,0,0,54.47
+2025-05-01,Q2 2025,CE31,Operations Bus,D117,8,9.3,1.3,46,Traffic Jam,yes,0,0,medium,0,0,0,60.36
+2025-05-31,Q2 2025,302,Operations Tram,D192,8,8.2,0.2,16,Vehicle Issue,yes,0,0,high,0,0,0,8.11
+2025-05-18,Q2 2025,302,Operations Tram,D187,8,9.0,1.0,16,Break Not Taken,no,1,0,high,0,0,0,36.1
+2025-07-25,Q3 2025,306,Operations Tram,D114,8,9.5,1.5,55,Late Shift Handover,yes,1,0,high,0,0,0,70.83
+2025-05-18,Q2 2025,308,Operations Tram,D183,8,8.2,0.2,21,Accident,yes,0,0,medium,0,1,0,7.06
+2025-07-04,Q3 2025,U35,Operations Tram,D130,8,8.8,0.8,22,Late Shift Handover,yes,0,0,high,0,0,0,34.57
+2025-05-04,Q2 2025,318,Operations Tram,D130,8,8.2,0.2,17,Construction Detour,yes,0,1,medium,0,0,1,7.36
+2025-07-05,Q3 2025,SB37,Operations Bus,D121,8,8.2,0.2,6,Traffic Jam,yes,0,0,medium,0,0,0,9.92
+2025-07-29,Q3 2025,306,Operations Tram,D185,8,8.9,0.9,34,Vehicle Issue,yes,0,0,high,0,0,0,34.03
+2025-06-05,Q2 2025,306,Operations Tram,D169,8,9.2,1.2,35,Break Not Taken,no,0,0,medium,0,0,0,49.2
+2025-06-10,Q2 2025,308,Operations Tram,D193,8,9.7,1.7,72,Late Shift Handover,yes,1,0,medium,0,0,0,77.02
+2025-07-27,Q3 2025,318,Operations Tram,D171,8,8.1,0.1,9,Construction Detour,yes,0,1,medium,0,0,1,4.55
+2025-07-05,Q3 2025,318,Operations Tram,D126,8,9.0,1.0,17,Break Not Taken,no,0,0,medium,0,0,0,49.63
+2025-05-09,Q2 2025,SB37,Operations Bus,D106,8,9.1,1.1,18,Accident,no,0,0,medium,0,1,0,42.18
+2025-06-22,Q2 2025,CE31,Operations Bus,D167,8,8.8,0.8,66,Construction Detour,yes,0,1,medium,0,0,1,39.84
+2025-07-17,Q3 2025,310,Operations Tram,D183,8,8.5,0.5,29,Traffic Jam,yes,0,0,high,0,0,0,25.2
+2025-07-07,Q3 2025,306,Operations Tram,D148,8,8.4,0.4,30,Traffic Jam,yes,0,0,medium,0,0,0,14.16
+2025-07-24,Q3 2025,U35,Operations Tram,D110,8,8.3,0.3,18,Accident,yes,0,0,medium,0,1,0,14.39
+2025-06-28,Q2 2025,310,Operations Tram,D192,8,9.1,1.1,17,Break Not Taken,no,1,0,low,0,0,0,44.44
+2025-06-30,Q2 2025,302,Operations Tram,D181,8,8.2,0.2,9,Construction Detour,yes,0,1,high,0,0,1,7.85
+2025-05-21,Q2 2025,310,Operations Tram,D142,8,8.3,0.3,12,Accident,yes,1,0,low,0,1,0,13.9
+2025-06-07,Q2 2025,310,Operations Tram,D172,8,9.3,1.3,37,Traffic Jam,no,0,0,medium,0,0,0,57.32
+2025-06-18,Q2 2025,SB37,Operations Bus,D192,8,10.2,2.2,54,Traffic Jam,no,0,0,medium,0,0,0,77.96
+2025-05-29,Q2 2025,302,Operations Tram,D193,8,8.3,0.3,18,Vehicle Issue,yes,0,0,high,0,0,0,13.51
+2025-05-02,Q2 2025,318,Operations Tram,D146,8,9.3,1.3,30,Traffic Jam,no,0,0,medium,0,0,0,58.67
+2025-07-01,Q3 2025,302,Operations Tram,D156,8,10.1,2.1,61,Accident,no,0,0,medium,0,1,0,92.88
+2025-06-15,Q2 2025,U35,Operations Tram,D182,8,8.5,0.5,20,Construction Detour,yes,1,1,medium,0,0,1,25.37
+2025-07-16,Q3 2025,U35,Operations Tram,D183,8,9.3,1.3,36,Break Not Taken,no,0,0,medium,0,0,0,45.7
+2025-05-27,Q2 2025,310,Operations Tram,D146,8,9.6,1.6,38,Traffic Jam,no,0,0,medium,0,0,0,57.32
+2025-06-22,Q2 2025,308,Operations Tram,D155,8,8.5,0.5,38,Vehicle Issue,yes,0,0,medium,0,0,0,21.16
+2025-06-15,Q2 2025,306,Operations Tram,D124,8,8.4,0.4,16,Vehicle Issue,yes,0,0,medium,0,0,0,16.56
+2025-07-02,Q3 2025,308,Operations Tram,D120,8,8.5,0.5,23,Construction Detour,yes,0,1,low,0,0,1,23.48
+2025-05-28,Q2 2025,302,Operations Tram,D144,8,8.3,0.3,12,Construction Detour,yes,0,1,low,0,0,1,14.29
+2025-07-25,Q3 2025,U35,Operations Tram,D138,8,8.3,0.3,20,Accident,yes,0,0,low,0,1,0,12.24
+2025-05-21,Q2 2025,308,Operations Tram,D112,8,8.1,0.1,11,Accident,yes,0,0,low,0,1,0,4.65
+2025-06-25,Q2 2025,SB37,Operations Bus,D153,8,8.6,0.6,23,Signal Problem,yes,0,0,medium,0,0,0,25.31
+2025-06-02,Q2 2025,CE31,Operations Bus,D119,8,9.5,1.5,72,Traffic Jam,yes,0,0,medium,0,0,0,62.99
+2025-07-29,Q3 2025,318,Operations Tram,D182,8,8.6,0.6,37,Construction Detour,yes,0,1,low,0,0,1,26.82
+2025-05-20,Q2 2025,CE31,Operations Bus,D125,8,8.2,0.2,16,Traffic Jam,yes,0,0,low,0,0,0,9.48
+2025-06-24,Q2 2025,308,Operations Tram,D105,8,8.3,0.3,21,Signal Problem,yes,0,0,low,0,0,0,13.24
+2025-06-29,Q2 2025,318,Operations Tram,D117,8,9.3,1.3,29,Break Not Taken,no,0,0,medium,0,0,0,49.9
+2025-05-19,Q2 2025,302,Operations Tram,D125,8,8.7,0.7,27,Police Action,yes,0,0,medium,1,0,0,34.6
+2025-06-24,Q2 2025,CE31,Operations Bus,D110,8,8.6,0.6,25,Construction Detour,yes,0,1,high,0,0,1,21.43
+2025-06-19,Q2 2025,306,Operations Tram,D108,8,10.0,2.0,63,Break Not Taken,no,0,0,high,0,0,0,83.52
+2025-05-25,Q2 2025,306,Operations Tram,D133,8,8.4,0.4,18,Traffic Jam,yes,0,0,medium,0,0,0,19.25
+2025-07-23,Q3 2025,SB37,Operations Bus,D102,8,10.0,2.0,63,Vehicle Issue,no,0,0,high,0,0,0,93.12
+2025-06-10,Q2 2025,306,Operations Tram,D107,8,9.1,1.1,24,Construction Detour,no,0,1,medium,0,0,1,43.77
+2025-05-05,Q2 2025,310,Operations Tram,D109,8,9.0,1.0,22,Break Not Taken,no,0,0,medium,0,0,0,46.15
+2025-06-13,Q2 2025,CE31,Operations Bus,D178,8,9.1,1.1,44,Construction Detour,yes,0,1,medium,0,0,1,49.6
+2025-06-02,Q2 2025,318,Operations Tram,D111,8,9.3,1.3,28,Traffic Jam,no,0,0,medium,0,0,0,58.95
+2025-05-08,Q2 2025,302,Operations Tram,D187,8,8.3,0.3,10,Traffic Jam,yes,0,0,low,0,0,0,12.46
+2025-06-11,Q2 2025,U35,Operations Tram,D148,8,8.6,0.6,6,Late Shift Handover,yes,0,0,high,0,0,0,24.28
+2025-05-01,Q2 2025,302,Operations Tram,D128,8,8.6,0.6,36,Construction Detour,yes,0,1,medium,0,0,1,24.83
+2025-06-01,Q2 2025,CE31,Operations Bus,D186,8,9.1,1.1,29,Vehicle Issue,no,0,0,medium,0,0,0,44.36
+2025-05-08,Q2 2025,310,Operations Tram,D135,8,8.4,0.4,17,Police Action,yes,0,0,medium,1,0,0,16.28
+2025-05-03,Q2 2025,310,Operations Tram,D139,8,9.1,1.1,50,Late Shift Handover,yes,1,0,medium,0,0,0,44.49
+2025-07-08,Q3 2025,318,Operations Tram,D137,8,8.6,0.6,31,Construction Detour,yes,1,1,medium,0,0,1,22.43
+2025-05-06,Q2 2025,CE31,Operations Bus,D143,8,8.6,0.6,33,Traffic Jam,yes,0,0,medium,0,0,0,22.78
+2025-06-02,Q2 2025,318,Operations Tram,D113,8,8.5,0.5,35,Vehicle Issue,yes,0,0,medium,0,0,0,20.41
+2025-05-15,Q2 2025,SB37,Operations Bus,D141,8,9.0,1.0,21,Break Not Taken,no,0,0,low,0,0,0,36.13
+2025-07-14,Q3 2025,CE31,Operations Bus,D106,8,8.3,0.3,22,Construction Detour,yes,0,1,low,0,0,1,15.3
+2025-05-10,Q2 2025,302,Operations Tram,D154,8,8.3,0.3,12,Police Action,yes,0,0,medium,1,0,0,14.98
+2025-06-04,Q2 2025,306,Operations Tram,D174,8,8.5,0.5,37,Police Action,yes,0,0,high,1,0,0,17.77
+2025-05-03,Q2 2025,U35,Operations Tram,D184,8,8.7,0.7,10,Late Shift Handover,yes,0,0,medium,0,0,0,32.37
+2025-07-10,Q3 2025,310,Operations Tram,D186,8,9.7,1.7,85,Traffic Jam,yes,0,0,high,0,0,0,75.52
+2025-07-01,Q3 2025,318,Operations Tram,D131,8,8.6,0.6,27,Accident,yes,0,0,high,0,1,0,30.63
+2025-06-02,Q2 2025,CE31,Operations Bus,D186,8,8.4,0.4,24,Traffic Jam,yes,0,0,low,0,0,0,14.71
+2025-07-03,Q3 2025,CE31,Operations Bus,D150,8,9.5,1.5,35,Break Not Taken,no,0,0,high,0,0,0,75.31
+2025-06-08,Q2 2025,318,Operations Tram,D185,8,8.2,0.2,9,Police Action,yes,0,0,medium,1,0,0,7.24
+2025-05-18,Q2 2025,302,Operations Tram,D169,8,9.0,1.0,25,Signal Problem,no,0,0,medium,0,0,0,45.97
+2025-05-27,Q2 2025,CE31,Operations Bus,D156,8,10.3,2.3,68,Late Shift Handover,no,0,0,low,0,0,0,111.19
+2025-07-04,Q3 2025,308,Operations Tram,D187,8,9.6,1.6,45,Signal Problem,no,0,0,low,0,0,0,60.62
+2025-07-18,Q3 2025,306,Operations Tram,D162,8,8.7,0.7,24,Accident,yes,0,0,medium,0,1,0,26.26
+2025-05-22,Q2 2025,SB37,Operations Bus,D173,8,8.8,0.8,32,Traffic Jam,yes,0,0,high,0,0,0,35.21
+2025-06-23,Q2 2025,SB37,Operations Bus,D138,8,8.6,0.6,21,Police Action,yes,0,0,high,1,0,0,29.56
+2025-05-12,Q2 2025,SB37,Operations Bus,D194,8,8.9,0.9,9,Accident,no,0,0,medium,0,1,0,37.75
+2025-06-12,Q2 2025,CE31,Operations Bus,D153,8,9.9,1.9,49,Traffic Jam,no,0,0,medium,0,0,0,76.56
+2025-07-07,Q3 2025,U35,Operations Tram,D161,8,9.0,1.0,15,Traffic Jam,no,0,0,medium,0,0,0,40.26
+2025-05-25,Q2 2025,U35,Operations Tram,D170,8,8.1,0.1,4,Traffic Jam,yes,0,0,medium,0,0,0,3.53
+2025-05-17,Q2 2025,302,Operations Tram,D192,8,8.7,0.7,22,Late Shift Handover,yes,0,0,medium,0,0,0,28.12
+2025-07-19,Q3 2025,318,Operations Tram,D170,8,8.7,0.7,34,Traffic Jam,yes,0,0,high,0,0,0,33.9
+2025-07-11,Q3 2025,308,Operations Tram,D186,8,9.4,1.4,30,Accident,no,0,0,low,0,1,0,50.32
+2025-07-11,Q3 2025,306,Operations Tram,D164,8,9.4,1.4,34,Accident,no,0,0,medium,0,1,0,72.58
+2025-07-25,Q3 2025,310,Operations Tram,D152,8,8.5,0.5,26,Signal Problem,yes,0,0,high,0,0,0,25.69
+2025-07-22,Q3 2025,SB37,Operations Bus,D183,8,8.4,0.4,23,Accident,yes,0,0,medium,0,1,0,14.91
+2025-07-09,Q3 2025,318,Operations Tram,D111,8,8.9,0.9,31,Late Shift Handover,yes,0,0,low,0,0,0,44.21
+2025-07-13,Q3 2025,306,Operations Tram,D114,8,8.9,0.9,33,Late Shift Handover,yes,0,0,high,0,0,0,39.17
+2025-07-09,Q3 2025,302,Operations Tram,D162,8,8.4,0.4,26,Construction Detour,yes,0,1,medium,0,0,1,15.99
+2025-06-15,Q2 2025,308,Operations Tram,D116,8,8.4,0.4,19,Vehicle Issue,yes,0,0,high,0,0,0,14.21
+2025-05-22,Q2 2025,SB37,Operations Bus,D122,8,9.0,1.0,14,Break Not Taken,no,0,0,low,0,0,0,35.91
+2025-05-11,Q2 2025,308,Operations Tram,D163,8,8.5,0.5,26,Accident,yes,0,0,low,0,1,0,18.47
+2025-05-25,Q2 2025,U35,Operations Tram,D145,8,8.9,0.9,49,Traffic Jam,yes,0,0,medium,0,0,0,33.21
+2025-06-29,Q2 2025,CE31,Operations Bus,D152,8,9.0,1.0,21,Late Shift Handover,yes,0,0,low,0,0,0,42.35
+2025-05-25,Q2 2025,306,Operations Tram,D189,8,8.6,0.6,38,Signal Problem,yes,0,0,low,0,0,0,29.07
+2025-05-16,Q2 2025,318,Operations Tram,D106,8,8.8,0.8,30,Late Shift Handover,yes,0,0,medium,0,0,0,38.25
+2025-05-15,Q2 2025,306,Operations Tram,D149,8,8.3,0.3,14,Construction Detour,yes,1,1,high,0,0,1,10.99
+2025-06-14,Q2 2025,318,Operations Tram,D183,8,8.9,0.9,33,Police Action,yes,0,0,high,1,0,0,36.85
+2025-07-11,Q3 2025,310,Operations Tram,D127,8,8.4,0.4,14,Vehicle Issue,yes,0,0,high,0,0,0,14.8
+2025-06-29,Q2 2025,308,Operations Tram,D139,8,8.7,0.7,29,Traffic Jam,yes,0,0,medium,0,0,0,32.14
+2025-05-12,Q2 2025,306,Operations Tram,D122,8,9.1,1.1,25,Break Not Taken,no,0,0,high,0,0,0,47.37
+2025-06-17,Q2 2025,310,Operations Tram,D117,8,8.9,0.9,49,Construction Detour,yes,0,1,medium,0,0,1,45.79
+2025-06-11,Q2 2025,CE31,Operations Bus,D144,8,8.3,0.3,22,Accident,yes,1,0,high,0,1,0,11.05
+2025-05-26,Q2 2025,310,Operations Tram,D177,8,8.9,0.9,43,Construction Detour,yes,0,1,low,0,0,1,39.54
+2025-05-31,Q2 2025,308,Operations Tram,D194,8,8.3,0.3,14,Accident,yes,0,0,medium,0,1,0,11.66
+2025-05-08,Q2 2025,CE31,Operations Bus,D114,8,9.6,1.6,31,Traffic Jam,no,0,0,high,0,0,0,59.99
+2025-06-23,Q2 2025,CE31,Operations Bus,D115,8,9.0,1.0,35,Late Shift Handover,yes,0,0,medium,0,0,0,48.92
+2025-06-10,Q2 2025,CE31,Operations Bus,D125,8,8.5,0.5,22,Construction Detour,yes,1,1,medium,0,0,1,22.08
+2025-05-10,Q2 2025,318,Operations Tram,D114,8,9.1,1.1,19,Police Action,no,0,0,high,1,0,0,45.68
+2025-06-22,Q2 2025,SB37,Operations Bus,D120,8,8.3,0.3,20,Construction Detour,yes,0,1,high,0,0,1,15.6
+2025-06-08,Q2 2025,308,Operations Tram,D126,8,8.9,0.9,38,Construction Detour,yes,0,1,medium,0,0,1,31.57
+2025-05-12,Q2 2025,SB37,Operations Bus,D115,8,9.4,1.4,24,Break Not Taken,no,0,0,medium,0,0,0,58.07
+2025-05-25,Q2 2025,SB37,Operations Bus,D146,8,9.1,1.1,16,Signal Problem,no,0,0,medium,0,0,0,47.18
+2025-06-18,Q2 2025,U35,Operations Tram,D156,8,8.4,0.4,17,Police Action,yes,0,0,high,1,0,0,18.09
+2025-05-27,Q2 2025,SB37,Operations Bus,D157,8,8.6,0.6,21,Late Shift Handover,yes,0,0,medium,0,0,0,21.75
+2025-05-01,Q2 2025,318,Operations Tram,D149,8,9.1,1.1,28,Late Shift Handover,yes,0,0,high,0,0,0,50.84
+2025-06-13,Q2 2025,306,Operations Tram,D177,8,8.2,0.2,8,Accident,yes,1,0,high,0,1,0,7.37
+2025-07-19,Q3 2025,CE31,Operations Bus,D104,8,8.5,0.5,24,Construction Detour,yes,1,1,medium,0,0,1,21.82
+2025-05-18,Q2 2025,306,Operations Tram,D156,8,8.5,0.5,28,Traffic Jam,yes,0,0,medium,0,0,0,23.12
+2025-05-24,Q2 2025,302,Operations Tram,D168,8,8.7,0.7,24,Traffic Jam,yes,0,0,medium,0,0,0,27.75
+2025-05-24,Q2 2025,308,Operations Tram,D180,8,9.4,1.4,27,Late Shift Handover,no,0,0,medium,0,0,0,53.97
+2025-06-10,Q2 2025,SB37,Operations Bus,D121,8,8.4,0.4,25,Signal Problem,yes,1,0,medium,0,0,0,19.35
+2025-05-07,Q2 2025,302,Operations Tram,D139,8,8.7,0.7,29,Construction Detour,yes,0,1,medium,0,0,1,27.52
+2025-06-04,Q2 2025,U35,Operations Tram,D102,8,9.2,1.2,45,Traffic Jam,yes,0,0,low,0,0,0,51.13
+2025-06-27,Q2 2025,SB37,Operations Bus,D130,8,8.9,0.9,39,Construction Detour,yes,0,1,medium,0,0,1,46.24
+2025-06-09,Q2 2025,CE31,Operations Bus,D181,8,8.3,0.3,19,Police Action,yes,0,0,high,1,0,0,11.37
+2025-06-22,Q2 2025,318,Operations Tram,D109,8,8.3,0.3,19,Police Action,yes,0,0,high,1,0,0,12.17
+2025-06-29,Q2 2025,310,Operations Tram,D170,8,8.6,0.6,35,Traffic Jam,yes,0,0,medium,0,0,0,23.42
+2025-05-28,Q2 2025,SB37,Operations Bus,D135,8,8.4,0.4,14,Traffic Jam,yes,0,0,medium,0,0,0,14.03
+2025-07-28,Q3 2025,310,Operations Tram,D176,8,8.9,0.9,13,Signal Problem,no,0,0,high,0,0,0,35.37
+2025-05-24,Q2 2025,308,Operations Tram,D180,8,8.4,0.4,17,Traffic Jam,yes,0,0,high,0,0,0,14.36
+2025-05-14,Q2 2025,310,Operations Tram,D128,8,9.3,1.3,10,Late Shift Handover,no,0,0,medium,0,0,0,63.26
+2025-05-03,Q2 2025,318,Operations Tram,D154,8,8.3,0.3,11,Construction Detour,yes,0,1,medium,0,0,1,14.81
+2025-07-21,Q3 2025,302,Operations Tram,D183,8,8.2,0.2,13,Accident,yes,0,0,high,0,1,0,7.23
+2025-07-07,Q3 2025,302,Operations Tram,D143,8,9.0,1.0,72,Vehicle Issue,yes,0,0,medium,0,0,0,50.06
+2025-05-27,Q2 2025,318,Operations Tram,D152,8,8.3,0.3,19,Signal Problem,yes,0,0,low,0,0,0,10.51
+2025-05-04,Q2 2025,SB37,Operations Bus,D105,8,8.7,0.7,35,Traffic Jam,yes,0,0,high,0,0,0,35.38
+2025-07-21,Q3 2025,SB37,Operations Bus,D107,8,8.5,0.5,16,Traffic Jam,yes,0,0,medium,0,0,0,25.26
+2025-05-16,Q2 2025,CE31,Operations Bus,D110,8,9.5,1.5,58,Signal Problem,yes,1,0,low,0,0,0,63.23
+2025-06-10,Q2 2025,308,Operations Tram,D113,8,9.0,1.0,46,Construction Detour,yes,0,1,low,0,0,1,38.26
+2025-05-18,Q2 2025,SB37,Operations Bus,D126,8,8.6,0.6,31,Construction Detour,yes,0,1,medium,0,0,1,27.11
+2025-06-17,Q2 2025,310,Operations Tram,D175,8,9.0,1.0,16,Break Not Taken,no,0,0,high,0,0,0,41.43
+2025-07-13,Q3 2025,310,Operations Tram,D103,8,9.4,1.4,59,Construction Detour,yes,0,1,medium,0,0,1,54.82
+2025-06-28,Q2 2025,U35,Operations Tram,D148,8,9.1,1.1,60,Traffic Jam,yes,0,0,medium,0,0,0,40.12
+2025-06-05,Q2 2025,318,Operations Tram,D143,8,8.3,0.3,13,Signal Problem,yes,0,0,low,0,0,0,13.19
