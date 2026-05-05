@@ -3,7 +3,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "start":"vite preview --host 0.0.0.0 --port $PORT",
+    "start":"vite preview --host 0.0.0.0 --port $PORT"
   },
   "dependencies": {
     "@vitejs/plugin-react": "6.0.1",
