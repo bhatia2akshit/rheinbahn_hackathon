@@ -25,7 +25,8 @@ jobs:
       - name: Build and push linux/amd64 image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./pillar-3/frontend
+          file: ./pillar-3/frontend/Dockerfile
           platforms: linux/amd64
           push: true
           tags: bhatia2akshit/indata-frontend:latest
